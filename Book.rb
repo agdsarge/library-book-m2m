@@ -15,10 +15,7 @@ class Book
         @@all << self
     end
 
-    def libraries
-        x = ILL.all.select {|lib| lib.book_obj == self}
-    end
-
+  
 
 
     #Class Methods
@@ -27,6 +24,26 @@ class Book
     end
 
     #Instance Methods
+
+    def libraries
+        x = ILL.all.select {|lib| lib.book_obj == self}
+    end
+
+    def how_many_in(lib_obj)
+        ## book accessing ILL
+        a = ILL.all.select { | ill_obj | ill_obj.book_obj == self }.find { | ill_obj | ill_obj.lib_obj == lib_obj }
+        a.quantity
+    end
+
+    def in_stock?(lib_obj)
+        self.how_many_in(lib_obj) > 0
+    end
+
+    def is_longest?(lib_obj)
+        lib_obj.longest_book == self.title
+    end
+
+    
 
 
 end
