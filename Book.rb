@@ -4,7 +4,7 @@ class Book
 
     attr_reader :title, :author, :genre, :pub_date, :page_count, :canShare?
 
-    def initialize(title, author, genre, pub_date, page_count)
+    def initialize(title, author, genre, pub_date, page_count, canShare?)
         # puts method(:initialize).parameters
         # raise "Danger, Will Robinson!" unless method(:initialize).parameters.all? { |elem| elem[1].class == Symbol } # +> array of parameters
         @title = title
