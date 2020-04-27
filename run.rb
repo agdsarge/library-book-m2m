@@ -12,9 +12,38 @@ def run_tests
     #beta = Library.new("SWEM", "Jamestown Rd", "Williamsburg", true)
     # puts beta.street_address
 
-    # 
+    #
     # alpha = Book.new("Ruby for Dummies", "Bob McSmart", "reference", "01 Jan 2020", 123, true)
-    # beta = Library.new("SWEM", "Jamestown Rd", "Williamsburg", true)
+
+
+
+    ruby = Book.new("Ruby for Dummies", "Bob McSmart", "reference", 123)
+    python = Book.new("Python for beginners", "Paul nicholsen", "refernce", 321)
+    swem = Library.new("SWEM", "Williamsburg", true)
+    wrl = Library.new("WRL", "Williamsburg", false)
+    uva = Library.new("Alderman", "Charlottesville", true)
+    swem.buy_book(ruby, 2)
+    wrl.buy_book(python, 4)
+
+    #puts swem.books[0]
+    puts swem.stock_of_book(ruby)   #2  test passed
+    puts wrl.stock_of_book(ruby)    #0  test passed
+    puts wrl.stock_of_book(python)  #4  test passed
+    puts swem.stock_of_book(python) #0 test passed
+    puts uva.stock_of_book(ruby)    #0 test passed
+
+
+    swem.loan_to_peer(ruby, wrl, 1)
+    puts swem.stock_of_book(ruby)   #1  test passed
+    puts wrl.stock_of_book(ruby)    #1  test passed
+
+    swem.loan_to_peer(ruby, uva, 1)
+
+    puts swem.stock_of_book(ruby)
+    puts uva.stock_of_book(ruby)
+    # puts wrl.stock_of_book(ruby)
+
+
     #
     # ILL.new(beta, alpha)
     # print alpha.libraries
