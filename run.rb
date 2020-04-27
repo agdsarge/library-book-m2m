@@ -43,14 +43,19 @@ def run_tests
     # puts uva.stock_of_book(ruby)    #0 test passed
 
 
-    swem.transfer_to_peer(ruby, wrl, 1)
+    #swem.transfer_to_peer(ruby, wrl, 1)
     puts "NEW TEST BELOW"
     # puts wrl.ownership.map {|b| b.quantity}.reduce(:+) #
     # puts swem.stock_of_book(ruby)   #1  test passed
     # puts wrl.stock_of_book(ruby)    #1  test passed
 
-    swem.transfer_to_peer(ruby, uva, 1)
+    # swem.transfer_to_peer(ruby, uva, 1)
 
+    #puts swem.stock_of_book(ruby)
+
+    #   { :book_obj => [ 0ind  "ownership quantity"  ,  1index "instock quantity"   ]  }=> 
+    
+    puts swem.ownership
     pp swem.how_many_checked_out(ruby)
 
 

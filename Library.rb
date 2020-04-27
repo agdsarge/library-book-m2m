@@ -64,20 +64,21 @@ class Library
         self.ownership #array of book obj
         #self.books #array of book objs that are in this library (ILL self x book)
         enriques_hash = {} #{book_obj => array[ownership_quant, self_books ]}
+
         self.ownership.each do |ill|
 
-            if enriques_hash[ill.book_obj]
-                enriques_hash[ill.book_obj][0] += ill.quantity
+            if enriques_hash[ill.book_obj.title]
+                enriques_hash[ill.book_obj.title][0] += ill.quantity
             else
-                enriques_hash[ill.book_obj] = [ill.quantity]
+                enriques_hash[ill.book_obj.title] = [ill.quantity, 0]
             end
         end
         ILL.all.select {|bk| bk.lib_obj == self}.each do |ill|
             
-            if enriques_hash[ill]
-                enriques_hash[ill][1] += ill.quantity
+            if enriques_hash[ill.book_obj.title]
+                enriques_hash[ill.book_obj.title][1] += ill.quantity
             else
-                enriques_hash[ill] = [ill.quantity]
+                enriques_hash[ill.book_obj.title] = [0, ill.quantity]
             end
         end
         enriques_hash
