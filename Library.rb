@@ -1,5 +1,7 @@
+require 'pry'
+
 class Library
-    attr_reader :name, :city, :isUniversity
+    attr_reader :name, :city, :isUniversity, :ownership
     @@all = []
     def initialize(name, city, isUniversity)
         raise "ERROR" unless [name, city].all? {|arg| arg.class == String}
@@ -7,6 +9,7 @@ class Library
         @name = name
         @city = city
         @isUniversity = isUniversity
+        @ownership = []
 
         @@all << self
     end
@@ -16,12 +19,14 @@ class Library
 
     def books
         ILL.all.select {|bk| bk.lib_obj == self}.map {|bk| bk.book_obj}
-
     end
 
     def buy_book(book_obj, quantity=1)
+        @ownership << ILL.new(self, book_obj, quantity)
+    end
+
+    def loan_book(book_obj, quantity=1)
         ILL.new(self, book_obj, quantity)
-        
     end
 
     def stock_of_book(book_obj)
@@ -30,14 +35,13 @@ class Library
     end
 
     def transfer_to_peer(book_obj, receiver, quantity=1)
-        
+
         #error handling
         raise "Can't loan to yourself" if self == receiver
         raise "Can't loan more books than you have" if self.stock_of_book(book_obj) < quantity
-        
         # check if in same city or both universities
         if Library.has_agreement(self, receiver)
-            receiver.buy_book(book_obj, quantity)
+            receiver.loan_book(book_obj, quantity)
             x = ILL.all.select {|bk| bk.lib_obj == self and bk.book_obj == book_obj}
             x[0].quantity -= quantity
         else
@@ -48,12 +52,35 @@ class Library
 
     def longest_book
         a = ILL.all.select { |ill_obj| ill_obj.lib_obj == self }
-        
         a.map! { |ill_obj| ill_obj.book_obj }
-
         book = a.max { |a, b| a.page_count <=> b.page_count }
-
         book.title
+    end
+
+    def how_many_checked_out(book_obj)
+        #wrl.how_many_left(warandpeace) #=>
+        #if book_obj.in_stock?(self)
+        #self.ownership.map {|b| b.quantity}.reduce(:+) #produces integer that tells us how many of a book the library bought
+        self.ownership #array of book obj
+        #self.books #array of book objs that are in this library (ILL self x book)
+        enriques_hash = {} #{book_obj => array[ownership_quant, self_books ]}
+        self.ownership.each do |ill|
+
+            if enriques_hash[ill.book_obj]
+                enriques_hash[ill.book_obj][0] += ill.quantity
+            else
+                enriques_hash[ill.book_obj] = [ill.quantity]
+            end
+        end
+        ILL.all.select {|bk| bk.lib_obj == self}.each do |ill|
+            
+            if enriques_hash[ill]
+                enriques_hash[ill][1] += ill.quantity
+            else
+                enriques_hash[ill] = [ill.quantity]
+            end
+        end
+        enriques_hash
     end
 
 
@@ -76,8 +103,3 @@ class Library
 
 
 end
-
-
-
-# wrl = Library.new("WRL", "Baker St", "Williamsburg", true, "VA")
-# puts wrl.name

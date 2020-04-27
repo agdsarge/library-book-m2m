@@ -33,36 +33,46 @@ def run_tests
     wrl.buy_book(python, 4)
     cville.buy_book(ruby, 1)
     cville.buy_book(warandpeace, 1)
-
-    #puts swem.books[0]
-    puts swem.stock_of_book(ruby)   #2  test passed
-    puts wrl.stock_of_book(ruby)    #0  test passed
-    puts wrl.stock_of_book(python)  #4  test passed
-    puts swem.stock_of_book(python) #0 test passed
-    puts uva.stock_of_book(ruby)    #0 test passed
+    wrl.buy_book(warandpeace,1)
+    # puts wrl.ownership.map {|b| b.quantity}.reduce(:+) # 5
+    # #puts swem.books[0]
+    # puts swem.stock_of_book(ruby)   #2  test passed
+    # puts wrl.stock_of_book(ruby)    #0  test passed
+    # puts wrl.stock_of_book(python)  #4  test passed
+    # puts swem.stock_of_book(python) #0 test passed
+    # puts uva.stock_of_book(ruby)    #0 test passed
 
 
     swem.transfer_to_peer(ruby, wrl, 1)
-    puts swem.stock_of_book(ruby)   #1  test passed
-    puts wrl.stock_of_book(ruby)    #1  test passed
+    puts "NEW TEST BELOW"
+    # puts wrl.ownership.map {|b| b.quantity}.reduce(:+) #
+    # puts swem.stock_of_book(ruby)   #1  test passed
+    # puts wrl.stock_of_book(ruby)    #1  test passed
 
     swem.transfer_to_peer(ruby, uva, 1)
 
-    puts swem.stock_of_book(ruby)
-    puts uva.stock_of_book(ruby)
+    pp swem.how_many_checked_out(ruby)
+
+
+    # puts swem.stock_of_book(ruby)
+    # puts uva.stock_of_book(ruby)
     # puts wrl.stock_of_book(ruby)
 
-    puts python.how_many_in(wrl) # should be 4
+    # puts python.how_many_in(wrl) # should be 4
+    #
+    # puts Library.has_agreement(swem, uva) # true
+    # puts Library.has_agreement(wrl, cville) # false
+    # puts Library.has_agreement(uva, cville) # true
+    # puts Library.has_agreement(swem, wrl) # true
+    #
+    #
+    # puts cville.longest_book # War and Peace
+    # puts ruby.is_longest?(cville) # False
+    # puts warandpeace.is_longest?(cville) # True
 
-    puts Library.has_agreement(swem, uva) # true
-    puts Library.has_agreement(wrl, cville) # false
-    puts Library.has_agreement(uva, cville) # true
-    puts Library.has_agreement(swem, wrl) # true
 
 
-    puts cville.longest_book # War and Peace
-    puts ruby.is_longest?(cville) # False
-    puts warandpeace.is_longest?(cville) # True
+
 
     #
     # ILL.new(beta, alpha)

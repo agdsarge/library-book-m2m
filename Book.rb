@@ -15,9 +15,6 @@ class Book
         @@all << self
     end
 
-  
-
-
     #Class Methods
     def self.all
         @@all
@@ -42,9 +39,6 @@ class Book
     def is_longest?(lib_obj)
         lib_obj.longest_book == self.title
     end
-
-    
-
 
 end
 
