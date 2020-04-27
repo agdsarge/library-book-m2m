@@ -11,6 +11,10 @@ class Library
         @@all << self
     end
 
+    def books
+        ILL.all.select {|bk| bk.lib_obj == self}
+    end
+
     def self.all
         @@all
     end

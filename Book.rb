@@ -16,6 +16,12 @@ class Book
         @@all << self
     end
 
+    def libraries
+        x = ILL.all.select {|lib| lib.book_obj == self}
+    end
+
+
+
     #Class Methods
     def self.all
         @@all
@@ -27,6 +33,6 @@ class Book
 end
 
 
-hp = Book.new("title_diddledee", "author_diddledee", "genre_diddledee", "pub_date_diddledee", "page_count_diddledee", true)
-
-puts hp.title
+# hp = Book.new("title_diddledee", "author_diddledee", "genre_diddledee", "pub_date_diddledee", "page_count_diddledee", true)
+#
+# puts hp.title
